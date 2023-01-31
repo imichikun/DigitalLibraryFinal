@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Specific Book</title>
+</head>
+<body>
+
+<b>Title of the book: </b> <td th:text="${book.getTitle()}"> title of book </td>
+<br><br>
+
+<b>Year of the book: </b> <td th:text="${book.getYear()}"> year of book </td>
+<hr/>
+
+<table>
+    <td>
+        <form th:method="DELETE" th:action="@{/books/delete/{id}(id=${book.getId()})}">
+            <input type="submit" value="Delete Book">
+        </form>
+    </td>
+
+    <td>
+        <form th:method="PUT" th:action="@{/books/update/{id}(id=${book.getId()})}">
+            <input type="submit" value="Update Book">
+        </form>
+    </td>
+</table>
+<hr/>
+
+<div th:if="${readerOfBook}">
+    <span> The Reader who possesses this book currenty: </span> <span th:text="${readerOfBook.getName()}"> reader of book</span>
+    <br><br>
+    <form th:method="GET" th:action="@{/books/remove/{id}(id=${book.getId()})}">
+        <input type="submit" value="Remove Book">
+    </form>
+</div>
+
+<div th:if="${allReaders}">
+    <span> This book is free so far. Which reader would you like to set this book to ? </span>
+    <br>
+    <form th:method="POST" th:action="@{/books/set/{id}(id=${book.getId()})}">
+        <label for="readerName"> Choose a reader for the book: </label>
+
+        <select th:object="${reader}" th:field="*{id}" id="readerName">
+            <option th:each="var: ${allReaders}" th:value="${var.getId()}" th:text="${var.getName()}"> </option>
+        </select>
+
+        <input type="submit" value="Set Book">
+    </form>
+</div>
+
+<!--<div th:if="${allReaders}">-->
+<!--    <span>This book is free so far. Whom would you like to set this book to ?</span>-->
+<!--    <br>-->
+<!--    <form th:method="POST" th:action="@{/books/set/{id}(id=${book.getId()})}">-->
+<!--        <label for="readerName">Choose Reader for book </label>-->
+
+<!--        <select th:object="${reader}" th:field="*{id}" id="readerName">-->
+<!--            <option th:each="var: ${allReaders}" th:value="${var.getId()}" th:text="${var.getName()}"></option>-->
+<!--        </select>-->
+
+<!--        <input type="submit" value="Set Book">-->
+<!--    </form>-->
+<!--</div>-->
+
+</body>
+</html>

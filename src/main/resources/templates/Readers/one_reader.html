@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Specific Reader</title>
+</head>
+<body>
+
+<b>Reader's name: </b> <td th:text="${reader.getName()}"> reader's name</td>
+<br><br>
+<b>Reader's age: </b> <td th:text="${reader.getAge()}"> reader's age</td>
+<hr/>
+
+<div th:if="${reader.getBooks().isEmpty()}">
+    <span> This Reader doesn't have any books yet </span>
+</div>
+
+<div th:unless="${reader.getBooks().isEmpty()}">
+    <span>This Reader possesses these books so far: </span>
+    <br><br>
+    <table th:each="var: ${reader.getBooks()}">
+            <td>
+                <span th:text="${var.getTitle() + '. ' + var.getYear()}"> book </span>
+            </td>
+    </table>
+</div>
+
+<hr/>
+<table>
+    <td>
+        <form th:method="DELETE" th:action="@{/delete/{id}(id=${reader.getId()})}">
+            <input type="submit" value="Delete Reader">
+        </form>
+    </td>
+
+    <td>
+        <form th:method="PUT" th:action="@{/update/{id}(id=${reader.getId()})}">
+            <input type="submit" value="Update Reader">
+        </form>
+    </td>
+</table>
+
+</body>
+</html>
